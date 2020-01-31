@@ -10,8 +10,8 @@ import time
 import paho.mqtt.client as mqtt
 import json
 
-adress = 'A4:C1:38:6B:B1:CB'
-location = 'lounge'
+adress = 'A4:C1:38:AC:80:0E'
+location = 'layla'
 
 class MyDelegate(btle.DefaultDelegate):
 	def __init__(self, params):
@@ -37,13 +37,10 @@ class MyDelegate(btle.DefaultDelegate):
 		except Exception as e:
 			print("Fehler")
 			print(e)
-			print(traceback.format_exc())
-		
-
 	
 def publish_message(location, measurement, reading):
 
-	topic = "home/inside/"+str(location)
+	topic = "home/inside/sensor/"+str(location)
 
 	server_address="192.168.0.10" 
 

@@ -37,13 +37,10 @@ class MyDelegate(btle.DefaultDelegate):
 		except Exception as e:
 			print("Fehler")
 			print(e)
-			print(traceback.format_exc())
-		
-
 	
 def publish_message(location, measurement, reading):
 
-	topic = "home/inside/"+str(location)
+	topic = "home/inside/sensor/"+str(location)
 
 	server_address="192.168.0.10" 
 
