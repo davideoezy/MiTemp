@@ -51,9 +51,10 @@ def publish_message(location, measurement, reading):
 	#ts = time.time()
 
 	dict_msg = {measurement:reading}
+	str_msg = str(measurement) + ",value=" + str(reading)
 	msg = json.dumps(dict_msg)
 
-	client.publish(topic,msg)
+	client.publish(topic,str_msg)
 	
 
 def connect():
