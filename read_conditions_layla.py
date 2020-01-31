@@ -5,7 +5,7 @@
 from bluepy import btle
 import os
 import re
-from dataclasses import dataclass
+#from dataclasses import dataclass
 import time
 import paho.mqtt.client as mqtt
 import json
