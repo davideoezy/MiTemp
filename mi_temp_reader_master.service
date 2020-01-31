@@ -1,0 +1,15 @@
+[Unit]
+Description=Python Xiaomi Mijia temp reader mqtt
+After=multi-user.target
+
+[Service]
+Type = idle
+ExecStart=/usr/bin/python3 -u /home/pi/git/MiTemp/read_conditions_joel.py
+WorkingDirectory=/home/pi/git/MiTemp/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
