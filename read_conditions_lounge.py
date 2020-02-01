@@ -49,8 +49,8 @@ class MyDelegate(btle.DefaultDelegate):
 						
 			con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
 			cur = con.cursor()
-
-   			try:
+			
+			try:
 				cur.execute(insert_stmt)
 				con.commit()
 			except:
