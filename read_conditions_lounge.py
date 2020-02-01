@@ -9,9 +9,17 @@ import re
 import time
 import paho.mqtt.client as mqtt
 import json
+import mysql.connector as mariadb
 
 adress = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
+device_label='RPi_1'
+
+db_host = '192.168.0.10'
+db_host_port = '3306'
+db_user = 'rpi'
+db_pass = 'warm_me'
+db = 'temp_logger'
 
 class MyDelegate(btle.DefaultDelegate):
 	def __init__(self, params):
@@ -32,6 +40,22 @@ class MyDelegate(btle.DefaultDelegate):
 			batt=int.from_bytes(batt,byteorder="little")
 			
 			publish_message(location, temp, humidity, batt)
+
+			insert_stmt = """
+    					INSERT INTO temperature
+    					(device, temp)
+    					VALUES
+    					('{}',{})""".format(device_label,temp)
+
+    		con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
+    		cur = con.cursor()
+
+   			try:
+				cur.execute(insert_stmt)
+				con.commit()
+			except:
+				con.rollback()
+				con.close()
 
 		except Exception as e:
 			print("Fehler")
