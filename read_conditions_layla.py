@@ -50,7 +50,7 @@ def publish_message(location, temp, hum, batt):
 	#ts = time.time()
 
 	dict_msg = {"location":location, "temperature":temp, "humidity":hum, "battery":batt}
-	str_msg = str(measurement) + ", value=" + str(reading)
+	#str_msg = str(measurement) + ", value=" + str(reading)
 	msg = json.dumps(dict_msg)
 
 	client.publish(topic,msg)	
