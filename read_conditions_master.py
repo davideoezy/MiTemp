@@ -23,22 +23,21 @@ class MyDelegate(btle.DefaultDelegate):
 		try:
 			# temp
 			temp=int.from_bytes(data[0:2],byteorder='little',signed=True)/100
-			publish_message(location, "temperature", temp)
 
 			# humidity
 			humidity=int.from_bytes(data[2:3],byteorder='little')
-			publish_message(location, "humidity", humidity)
 
 			# battery
 			batt=p.readCharacteristic(0x001b)
 			batt=int.from_bytes(batt,byteorder="little")
-			publish_message(location, "temp_sensor_battery", batt)
+			
+			publish_message(location, temp, humidity, batt)
 
 		except Exception as e:
 			print("Fehler")
 			print(e)
 	
-def publish_message(location, measurement, reading):
+def publish_message(location, temp, hum, batt):
 
 	topic = "home/inside/sensor/"+str(location)
 
@@ -50,7 +49,7 @@ def publish_message(location, measurement, reading):
 
 	#ts = time.time()
 
-	dict_msg = {"location":location, measurement:reading}
+	dict_msg = {"location":location, "temperature":temp, "humidity":hum, "battery":batt}
 	str_msg = str(measurement) + ", value=" + str(reading)
 	msg = json.dumps(dict_msg)
 
