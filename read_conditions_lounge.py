@@ -42,13 +42,13 @@ class MyDelegate(btle.DefaultDelegate):
 			publish_message(location, temp, humidity, batt)
 
 			insert_stmt = """
-    					INSERT INTO temperature
-    					(device, temp)
-    					VALUES
-    					('{}',{})""".format(device_label,temp)
-
-    		con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
-    		cur = con.cursor()
+    		INSERT INTO temperature
+    		(device, temp)
+    		VALUES
+    		('{}',{})""".format(device_label,temp)
+						
+			con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
+			cur = con.cursor()
 
    			try:
 				cur.execute(insert_stmt)
