@@ -78,7 +78,6 @@ while True:
 			unconnectedTime=None			
 		if p.waitForNotifications(2000):
 			continue
-		p.disconnect()
 		break
 	except Exception as e:
 		print("Connection lost")
