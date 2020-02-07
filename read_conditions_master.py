@@ -13,6 +13,15 @@ import json
 adress = 'A4:C1:38:CB:01:60'
 location = 'master'
 
+topic = "home/inside/sensor/"+str(location)
+
+server_address="192.168.0.10" 
+
+client_label = "docker_"+str(location)+"_conditions"
+client = mqtt.Client(client_label)
+client.connect(server_address, keepalive=60)
+
+
 class MyDelegate(btle.DefaultDelegate):
 	def __init__(self, params):
 		btle.DefaultDelegate.__init__(self)
@@ -38,16 +47,6 @@ class MyDelegate(btle.DefaultDelegate):
 			print(e)
 	
 def publish_message(location, temp, hum, batt):
-
-	topic = "home/inside/sensor/"+str(location)
-
-	server_address="192.168.0.10" 
-
-	client_label = "docker_"+str(location)+"_conditions"
-	client = mqtt.Client(client_label)
-	client.connect(server_address, keepalive=60)
-
-	#ts = time.time()
 
 	dict_msg = {"location":location, "temperature":temp, "humidity":hum, "battery":batt}
 	#str_msg = str(measurement) + ", value=" + str(reading)

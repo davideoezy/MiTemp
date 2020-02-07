@@ -13,6 +13,15 @@ import mysql.connector as mariadb
 
 adress = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
+
+topic = "home/inside/sensor/"+str(location)
+
+server_address="192.168.0.10" 
+
+client_label = "docker_"+str(location)+"_conditions"
+client = mqtt.Client(client_label)
+client.connect(server_address, keepalive=60)
+
 device_label='RPi_1'
 
 db_host = '192.168.0.10'
@@ -62,16 +71,6 @@ class MyDelegate(btle.DefaultDelegate):
 			print(e)
 	
 def publish_message(location, temp, hum, batt):
-
-	topic = "home/inside/sensor/"+str(location)
-
-	server_address="192.168.0.10" 
-
-	client_label = "docker_"+str(location)+"_conditions"
-	client = mqtt.Client(client_label)
-	client.connect(server_address, keepalive=60)
-
-	#ts = time.time()
 
 	dict_msg = {"location":location, "temperature":temp, "humidity":hum, "battery":batt}
 	#str_msg = str(measurement) + ", value=" + str(reading)
