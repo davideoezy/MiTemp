@@ -101,7 +101,6 @@ while True:
 			unconnectedTime=None			
 		if p.waitForNotifications(2000):
 			continue
-		break
 	except Exception as e:
 		print("Connection lost")
 		if connected is True: #First connection abort after connected
