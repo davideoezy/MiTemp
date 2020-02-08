@@ -21,11 +21,11 @@ server_address="192.168.0.10"
 
 client_label = str(location)+"_conditions"
 client = mqtt.Client(client_label)
-client.connect(server_address, keepalive=60)
 
 offline_msg = json.dumps({"location":location, "status":"offline"})
-
 client.will_set(status_topic, payload=offline_msg, qos=0, retain=True)
+
+client.connect(server_address, keepalive=60)
 
 device_label='RPi_1'
 
