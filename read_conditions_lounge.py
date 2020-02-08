@@ -15,12 +15,17 @@ adress = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
 
 topic = "home/inside/sensor/"+str(location)
+status_topic = "/status/sensor/"+str(location)
 
 server_address="192.168.0.10" 
 
-client_label = "docker_"+str(location)+"_conditions"
+client_label = str(location)+"_conditions"
 client = mqtt.Client(client_label)
 client.connect(server_address, keepalive=60)
+
+offline_msg = json.dumps({"location":location, "status":"offline"})
+
+client.will_set(topic, payload=offline_msg, qos=0, retain=True)
 
 device_label='RPi_1'
 
@@ -49,6 +54,7 @@ class MyDelegate(btle.DefaultDelegate):
 			batt=int.from_bytes(batt,byteorder="little")
 			
 			publish_message(location, temp, humidity, batt)
+			publish_status(location)
 
 			insert_stmt = """
     		INSERT INTO temperature
@@ -77,6 +83,11 @@ def publish_message(location, temp, hum, batt):
 	msg = json.dumps(dict_msg)
 
 	client.publish(topic,msg)	
+
+def publish_status(location):
+	status_topic = "/status/sensor/"+str(location)
+	online_msg = json.dumps({"location":location, "status":"online"})
+	client.publish(status_topic,payload=online_msg, qos=0, retain=True)
 
 def connect():
 	p = btle.Peripheral(adress)	
