@@ -15,7 +15,7 @@ adress = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
 
 topic = "home/inside/sensor/"+str(location)
-status_topic = "status/sensor/"+str(location)
+status_topic = "status/heater
 
 server_address="192.168.0.10" 
 
@@ -85,7 +85,7 @@ def publish_message(location, temp, hum, batt):
 	client.publish(topic,msg)	
 
 def publish_status(location):
-	status_topic = "status/sensor/"+str(location)
+	status_topic = "status/heater"
 	online_msg = json.dumps({"location":location, "status":"online"})
 	client.publish(status_topic,payload=online_msg, qos=0, retain=True)
 
