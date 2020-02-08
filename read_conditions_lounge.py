@@ -85,7 +85,7 @@ def publish_message(location, temp, hum, batt):
 	client.publish(topic,msg)	
 
 def publish_status(location):
-	status_topic = "/status/sensor/"+str(location)
+	status_topic = "status/sensor/"+str(location)
 	online_msg = json.dumps({"location":location, "status":"online"})
 	client.publish(status_topic,payload=online_msg, qos=0, retain=True)
 
