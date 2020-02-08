@@ -15,7 +15,7 @@ adress = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
 
 topic = "home/inside/sensor/"+str(location)
-status_topic = "/status/sensor/"+str(location)
+status_topic = "status/sensor/"+str(location)
 
 server_address="192.168.0.10" 
 
