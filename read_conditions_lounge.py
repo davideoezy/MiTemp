@@ -25,7 +25,7 @@ client.connect(server_address, keepalive=60)
 
 offline_msg = json.dumps({"location":location, "status":"offline"})
 
-client.will_set(topic, payload=offline_msg, qos=0, retain=True)
+client.will_set(status_topic, payload=offline_msg, qos=0, retain=True)
 
 device_label='RPi_1'
 
