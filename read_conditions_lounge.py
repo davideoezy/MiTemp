@@ -9,10 +9,10 @@ import time
 #import mysql.connector as mariadb
 from mqtt_helper import mqtt_helper
 
-mqtt_helper = mqtt_helper()
-
 address = 'A4:C1:38:6B:B1:CB'
 location = 'lounge'
+
+mqtt_helper = mqtt_helper(location)
 
 # device_label='RPi_1'
 
