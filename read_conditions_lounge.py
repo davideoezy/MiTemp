@@ -79,7 +79,7 @@ unconnectedTime=None
 while True:
 	try:
 		if not connected:
-			print("Trying to connect to " + adress)
+			print("Trying to connect to " + address)
 			p=connect()
 			connected=True
 			unconnectedTime=None			
