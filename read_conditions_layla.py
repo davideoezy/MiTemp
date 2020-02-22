@@ -5,22 +5,13 @@
 from bluepy import btle
 import os
 import re
-#from dataclasses import dataclass
 import time
-import paho.mqtt.client as mqtt
-import json
+from mqtt_helper import mqtt_helper
 
-adress = 'A4:C1:38:AC:80:0E'
+address = 'A4:C1:38:AC:80:0E'
 location = 'layla'
 
-topic = "home/inside/sensor/"+str(location)
-
-server_address="192.168.0.10" 
-
-client_label = "docker_"+str(location)+"_conditions"
-client = mqtt.Client(client_label)
-client.connect(server_address, keepalive=60)
-
+mqtt_helper = mqtt_helper(location)
 
 class MyDelegate(btle.DefaultDelegate):
 	def __init__(self, params):
@@ -40,23 +31,15 @@ class MyDelegate(btle.DefaultDelegate):
 			batt=p.readCharacteristic(0x001b)
 			batt=int.from_bytes(batt,byteorder="little")
 			
-			publish_message(location, temp, humidity, batt)
+			mqtt_helper.publish_message(temp, humidity, batt)
+			mqtt_helper.publish_status()
 
 		except Exception as e:
 			print("Fehler")
 			print(e)
 	
-def publish_message(location, temp, hum, batt):
-
-	dict_msg = {"location":location, "temperature":temp, "humidity":hum, "battery":batt}
-	#str_msg = str(measurement) + ", value=" + str(reading)
-	msg = json.dumps(dict_msg)
-
-	client.publish(topic,msg)	
-	
-
 def connect():
-	p = btle.Peripheral(adress)	
+	p = btle.Peripheral(address)	
 	val=b'\x01\x00'
 	p.writeCharacteristic(0x0038,val,True)
 	p.withDelegate(MyDelegate("abc"))
@@ -71,7 +54,7 @@ unconnectedTime=None
 while True:
 	try:
 		if not connected:
-			print("Trying to connect to " + adress)
+			print("Trying to connect to " + address)
 			p=connect()
 			connected=True
 			unconnectedTime=None			
