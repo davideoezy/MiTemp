@@ -22,8 +22,6 @@ mqtt_helper = mqtt_helper(location)
 # db_pass = 'warm_me'
 # db = 'temp_logger'
 
-mqtt_helper.initialise(location)
-
 class MyDelegate(btle.DefaultDelegate):
 	def __init__(self, params):
 		btle.DefaultDelegate.__init__(self)
