@@ -6,10 +6,10 @@ from bluepy import btle
 import os
 import re
 import time
-import mysql.connector as mariadb
+#import mysql.connector as mariadb
 from mqtt_helper import mqtt_helper
 
-address = 'A4:C1:38:6B:B1:CB'
+address = 'A4:C1:38:98:0D:A1'
 location = 'lounge'
 
 mqtt_helper = mqtt_helper(location)
@@ -43,21 +43,21 @@ class MyDelegate(btle.DefaultDelegate):
 			mqtt_helper.publish_message(temp, humidity, batt)
 			mqtt_helper.publish_status()
 
-			insert_stmt = """
-    		INSERT INTO temperature
-    		(device, temp)
-    		VALUES
-    		('{}',{})""".format(device_label,temp)
+			# insert_stmt = """
+    		# INSERT INTO temperature
+    		# (device, temp)
+    		# VALUES
+    		# ('{}',{})""".format(device_label,temp)
 						
-			con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
-			cur = con.cursor()
+			# con = mariadb.connect(host = db_host, port = db_host_port, user = db_user, password = db_pass, database = db)
+			# cur = con.cursor()
 			
-			try:
-				cur.execute(insert_stmt)
-				con.commit()
-			except:
-				con.rollback()
-				con.close()
+			# try:
+			# 	cur.execute(insert_stmt)
+			# 	con.commit()
+			# except:
+			# 	con.rollback()
+			# 	con.close()
 
 		except Exception as e:
 			print("Fehler")
