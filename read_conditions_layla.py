@@ -9,7 +9,7 @@ import time
 from mqtt_helper import mqtt_helper
 
 address = 'A4:C1:38:AC:80:0E'
-location = 'layla'
+location = 'dining'
 
 mqtt_helper = mqtt_helper(location)
 
